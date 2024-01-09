@@ -2,6 +2,8 @@
 #include "headers/Game.h"
 #include "headers/Player.h"
 #include "headers/Monster.h"
+#include "headers/TrapRoom.h"
+#include "headers/PoisonRoom.h"
 #include "headers/Map.h"
 #include "iostream"
 
@@ -36,6 +38,13 @@ void Game::run()
             break;
         }
 
+        // Check if the current room is a TrapRoom
+        Room *currentRoom = map->getRoomAtPosition(player->getPosition());
+        PoisonRoom *poisonRoom = dynamic_cast<PoisonRoom *>(currentRoom);
+
+          // Check if the current room is a TrapRoom
+        TrapRoom *trapRoom = dynamic_cast<TrapRoom *>(currentRoom);
+
         // Monster's turn
         std::cout << "Monster's Turn:" << std::endl;
 
@@ -53,6 +62,18 @@ void Game::run()
             std::cout << "Game Over! The monster caught you. You lose!" << std::endl;
             break;
         }
+
+        // Check if the current room is a PoisonedRoom and visit it
+        if (poisonRoom)
+        {
+            poisonRoom->visit(player);
+        }
+
+         // Check if the current room is a TrapRoom and visit it
+        if (trapRoom)
+        {
+            trapRoom->visit(player);
+        }
     }
 
     // Check if the game ended due to running out of moves
@@ -64,7 +85,6 @@ void Game::run()
 
 void Game::handlePlayerMove()
 {
-
 
     // Store the current position for potential rollback
     Vector currentPosition = player->getPosition();

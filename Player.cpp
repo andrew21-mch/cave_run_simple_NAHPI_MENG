@@ -4,7 +4,6 @@
 #include "iostream"
 #include "headers/Colors.h"
 
-
 Player::Player(Vector pos, int health, int maxMoves) : Character(pos), healthPoints(health), maxMoves(maxMoves), movesRemaining(maxMoves) {}
 
 int Player::getHealthPoints() const
@@ -104,4 +103,17 @@ void Player::sense(Map *map)
 {
     // Custom logic for player sensing the map state
     std::cout << "Player sensing map..." << std::endl;
+}
+
+void Player::reduceHealthPoints(int amount)
+{
+    healthPoints -= amount;
+    if (healthPoints < 0)
+    {
+        healthPoints = 0;
+    }
+}
+void Player::setHealthPoints(int value)
+{
+    healthPoints = value;
 }

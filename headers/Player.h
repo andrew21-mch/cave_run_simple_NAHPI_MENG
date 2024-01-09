@@ -15,9 +15,12 @@ public:
     int getMovesRemaining() const;
     void decreaseMovesRemaining();
 
+
     void draw() override;
     void move() override;
     Vector simulateNextMove();
     void update() override;
     void sense(Map *map) override;
+    void reduceHealthPoints(int amount);
+    void setHealthPoints(int value);
 };
